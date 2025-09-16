@@ -44,16 +44,22 @@ class Game{
 criarCard(){
     const divCard=document.createElement("div");
     divCard.classList.add("card");
+    const conte = document.createElement("conte");
+    conte.classList.add("conte");
     const campoImagem=document.createElement("img");
-    campoImagem.classList.add = ("imagem")
+    campoImagem.classList.add("img")
     campoImagem.src = this.imagem;
+    const descri = document.createElement("descri");
+    descri.classList.add("descri");
     const campoNome= document.createElement("h1");
     campoNome.textContent=`Nome:${this.nome}`;
     const campoDescricao=document.createElement("h2");
     campoDescricao.textContent=`Descricao:${this.descricao}`;
-    divCard.appendChild(campoImagem);
-    divCard.appendChild(campoNome);
-    divCard.appendChild(campoDescricao);
+    divCard.appendChild(conte)
+    conte.appendChild(campoImagem)
+    divCard.appendChild(descri)
+    descri.appendChild(campoNome);
+    descri.appendChild(campoDescricao);
     return divCard;
 
 }
@@ -103,6 +109,5 @@ const attLista=(listaParaExibir = games)=>{
 }
 
 b1.addEventListener("click",criarGame)
-
 campoBusca.addEventListener("input",buscarGame)
 attLista()

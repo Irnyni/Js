@@ -6,23 +6,39 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <span>Imagem</span>
-            <input id="imagem" type="text">
-        <span>Nome</span>
-    
-        <input id="nome" type="text">
-                <span>Descricao</span>
-        <input id="descricao" type="text">
-     
-        <button id="b1">Adicionar game</button>
-              <span>Pesquisar</span>
-        <input id="pesquisa" type="text">
-        <button id="btnp">Pesquisar</button>
-        <ul id="lista" ></ul>
-     
+    <div class="cabecalho">
 
+        <div>        <span>Imagem</span>
+        <input id="imagem" type="text"></div>
+
+        <div>   <span>Nome</span>
+        <input id="nome" type="text"></div>
+
+
+        <div><span>Descrição</span>
+        <input id="descricao" type="text">
+        
     </div>
+       
+
+    <div> <button id="b1">Adicionar game</button></div>
+
+        <div>
+        <span>Pesquisar</span>
+        <input id="pesquisa" type="text">
+        </div>
+     
+        
+       
+  
+</div>
+      
+    </div>
+
+    <div class="conteudo">
+           <ul id="lista" ></ul>
+    </div>
+         
 <script src="script.js"></script>
 </body>
 
@@ -31,9 +47,92 @@
 </html>
 
 <style>
-    .imagem{
-        width: 200px;
-        height: 200px;
-    }
-</style>
+.conte{
+width: 80%;
+}
 
+
+.conteudo{
+    display: flex;
+
+    background-color: rgb(34, 2, 2);
+    color: rgb(0, 0, 0);
+    min-height: 2000px;
+    justify-content: center;
+
+}
+.cabecalho{
+    background-color: rgb(4, 5, 2);
+    color: rgb(255, 255, 255);
+    height:auto;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    font-size: 20px;
+    align-items: center;
+    font-family: fantasy;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-wrap: wrap;
+
+    
+}
+#lista{
+    margin-top: 150px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+input{
+    height: 15px;
+    margin: 10px;
+    font-size: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bolder;
+
+}
+.card{
+
+    background-color: rgb(64, 2, 2);
+    border: 2px solid white;
+    border-radius: 30px;
+    color: antiquewhite;
+   
+    display:flexbox;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px;
+    align-items: center;
+    height: 300px;
+    margin: 50px;
+    width: 300px;
+    font-size: 8px;
+    
+    
+
+}
+
+#b1{
+    width: 140px;
+    height: 40px;
+    font-size: 17px;
+    background-color: brown;
+    border-radius: 30px;
+    color: aliceblue;
+ font-weight: bolder;
+
+}
+
+
+.img{
+    width: 100%;
+    height: 60%;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgb(4, 0, 0);
+    object-fit: cover;
+}
+</style>
