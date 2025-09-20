@@ -13,8 +13,9 @@ const jogosnatela=[];
 
 
 class Game{
-    constructor(nome,descricao,imagem){    
-
+    constructor(id,nome,descricao,imagem){  
+         
+        this.id=id;
         this.nome=nome;
         this.descricao=descricao;
         this.imagem=imagem;
@@ -34,11 +35,26 @@ criarCard(){
     campoNome.textContent=`Nome:${this.nome}`;
     const campoDescricao=document.createElement("h2");
     campoDescricao.textContent=`Descricao:${this.descricao}`;
-    divCard.appendChild(conte)
+    const btnedit= document.createElement("button");
+    btnedit.classList.add("btnedit");
+    btnedit.textContent = "Editar";
+    btnedit.dataset.id = this.id;
+    const btndelete= document.createElement("button");
+    btndelete.classList.add("btndelete");
+    btndelete.textContent="Deletar";
+btndelete.addEventListener("click",()=>{
+    const gid = this.id;
+    console.log(gid)
+    deletarGame(gid);
+
+});
+    divCard.appendChild(conte);
     conte.appendChild(campoImagem)
     divCard.appendChild(descri)
     descri.appendChild(campoNome);
     descri.appendChild(campoDescricao);
+    divCard.appendChild(btnedit);
+    divCard.appendChild(btndelete);   
     return divCard;
 
 }
@@ -93,7 +109,7 @@ const attLista= async()=>{
     const jogoJson= await buscarTodosOsDados();
     console.log(jogoJson)
     const jogosComoObjetos = jogoJson.map(jogoJson => {
-            return new Game(jogoJson.nome, jogoJson.descricao, jogoJson.imagem);
+            return new Game(jogoJson.id,jogoJson.nome, jogoJson.descricao, jogoJson.imagem);
         });
     listacards.innerText="";
     for (g of jogosComoObjetos){
@@ -157,3 +173,23 @@ async function buscarTodosOsDados() {
   }
 }
 attLista()
+
+
+
+
+const deletarGame=async(gid)=>{
+try{
+const response = await fetch(`http://localhost:3000/games/${gid}`,{
+  method:'DELETE'
+});
+   if(!response.ok){
+    throw new Error(`Erro HTTP! Status: ${response.status}`);
+   }
+   const resultado = await response.json();
+   attLista();
+
+  } catch (error) {
+    console.error('Falha ao deletar o jogo:', error);
+    alert('Ocorreu um erro ao excluir o jogo.');
+  }
+}

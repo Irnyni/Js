@@ -72,7 +72,7 @@ app.delete('/games/:id',(req,res)=>{
             res.status(500).json({error:err.message});
             return;
         }else{
-            res.json({mensagem:`Item ${id} excluido`,id: this.lastID})
+            res.json({mensagem:`Item ${id} excluido`,id: this.id})
         }
     })
 
