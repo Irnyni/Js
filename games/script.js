@@ -1,16 +1,22 @@
 
+
 const inputnome = document.getElementById("nome");
 const inputdescricao=document.getElementById("descricao");
 const inputImage=document.getElementById("imagem");
 const b1 = document.getElementById("b1");
+let id= 0;
 
 const listacards= document.getElementById("lista");
 const campoBusca= document.getElementById("pesquisa");
 const btnPesquisa= document.getElementById("btnp");
 const jogosnatela=[];
+const salvaredit= document.getElementById("b2");
 
 
+b2.addEventListener("click",()=>{
+     salvar()
 
+})
 
 class Game{
     constructor(id,nome,descricao,imagem){  
@@ -48,6 +54,12 @@ btndelete.addEventListener("click",()=>{
     deletarGame(gid);
 
 });
+btnedit.addEventListener("click",()=>{
+  const gid = this.id;
+  editarGame(gid);
+
+
+})
     divCard.appendChild(conte);
     conte.appendChild(campoImagem)
     divCard.appendChild(descri)
@@ -77,15 +89,16 @@ const criarGame=()=>{
 
 
 }
+
 const buscarGame= async()=>{
-  
+
   const busca = campoBusca.value.trim().toLowerCase();
   const filtro = jogosnatela.filter(jogo=>{
     return jogo.nome.toLowerCase().includes(busca);
 
   })
     attListabusca(filtro);
-    console.log(filtro);
+ 
     return filtro;
   
 
@@ -97,17 +110,17 @@ const attListabusca= (jogosbuscados)=>{
     for (g of jogosbuscados){
         novocard=g.criarCard();
         listacards.appendChild(novocard)
-       
-
     }
     
 }
 
-
 const attLista= async()=>{
+  
+
     listacards.innerHTML = ''; 
     const jogoJson= await buscarTodosOsDados();
-    console.log(jogoJson)
+    console.log(jogoJson);
+    jogosnatela.length = 0;
     const jogosComoObjetos = jogoJson.map(jogoJson => {
             return new Game(jogoJson.id,jogoJson.nome, jogoJson.descricao, jogoJson.imagem);
         });
@@ -143,7 +156,7 @@ async function salvarDados(dadosParaSalvar) {
 
     const resultado = await response.json();
     console.log('Resposta do servidor:', resultado);
-    alert('Dados salvos com sucesso!');
+ 
   } catch (error) {
     console.error('Falha ao salvar dados:', error);
 
@@ -164,7 +177,7 @@ async function buscarTodosOsDados() {
     const jogos = await response.json();
     
     
-   console.log(jogos);
+  
     return jogos;
 
   } catch (error) {
@@ -192,4 +205,67 @@ const response = await fetch(`http://localhost:3000/games/${gid}`,{
     console.error('Falha ao deletar o jogo:', error);
     alert('Ocorreu um erro ao excluir o jogo.');
   }
+}
+
+const editarGame= async(gid)=>{
+campoBusca.value="";
+await buscarGame()
+await attLista()
+
+  try{
+    const response = await fetch(`http://localhost:3000/games/${gid}`);
+  
+    if (!response.ok){
+      throw new Error("erro ao carregar");
+    }
+    const game = await response.json();
+    
+    inputImage.value=game.imagem;
+    inputdescricao.value=game.descricao;
+    inputnome.value= game.nome;
+
+    id=game.id;
+      }catch(error){
+    console.log("falha",error);
+
+  }
+
+}
+
+const salvar = async()=>{
+  
+  const gameAtualizado = new Game(
+      id, 
+      inputnome.value.trim(),
+      inputdescricao.value.trim(),
+      inputImage.value.trim()
+  );
+
+  try{
+    const response= await fetch(`http://localhost:3000/games/${id}`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+       body: JSON.stringify(gameAtualizado) 
+    });
+    
+    if(!response.ok){
+      throw new Error(`Erro: ${response.status}`);
+    }
+    
+    const resultado=await response.json();
+
+    attLista();
+
+
+    inputnome.value = "";
+    inputImage.value = "";
+    inputdescricao.value = "";
+    id = 0; 
+    
+  } catch (error) {
+        console.error('Falha ao atualizar o jogo:', error);
+        alert('Ocorreu um erro ao salvar as alterações.');
+    }
 }
