@@ -65,8 +65,8 @@ btnedit.addEventListener("click",()=>{
     divCard.appendChild(descri)
     descri.appendChild(campoNome);
     descri.appendChild(campoDescricao);
-    divCard.appendChild(btnedit);
-    divCard.appendChild(btndelete);   
+    descri.appendChild(btnedit);
+    descri.appendChild(btndelete);   
     return divCard;
 
 }
@@ -142,7 +142,7 @@ campoBusca.addEventListener("input",buscarGame);
 
 async function salvarDados(dadosParaSalvar) {
   try {
-    const response = await fetch('http://localhost:3000/games', {
+    const response = await fetch('http://localhost:8088/games', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -167,7 +167,7 @@ async function salvarDados(dadosParaSalvar) {
 async function buscarTodosOsDados() {
   try {
    
-    const response = await fetch('http://localhost:3000/games');
+    const response = await fetch('http://localhost:8088/games');
 
     if (!response.ok) {
       throw new Error(`Erro HTTP! Status: ${response.status}`);
